@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <title>SportXtra</title>
+
+    <!-- for boostrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Eczar:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- for font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      body {
+        background-color: lightyellow;
+      }
+
+      #clock {
+        border: 2px dashed black;
+        border-radius: 10px;
+        padding: 8px;
+        font-size: small;
+      }
+
+      .logoHeader {
+        font-size: x-large;
+      }
+
+      nav {
+        background-color: lightskyblue;
+        /* position: sticky; */
+        /* top: 10px; */
+      }
+
+      nav a img {
+        border-radius: 50%;
+      }
+
+      .navLink {
+        color: #ffffff;
+      }
+
+      nav ul li {
+        transition: 1s;
+      }
+      nav ul li:hover {
+        scale: 1.5;
+      }
+
+      .logoSports {
+        font-family: "Ubuntu", serif;
+        font-weight: 300;
+        font-style: normal;
+        color: blue;
+      }
+
+      .logoX {
+        font-family: "Quantico", serif;
+        font-weight: 700;
+        font-size: xx-large;
+        font-style: normal;
+        color: #ffffff;
+      }
+
+      .logoTra {
+        font-family: "Ubuntu", serif;
+        font-weight: 300;
+        font-style: normal;
+        color: #ffffff;
+      }
+
+      #home {
+        background-color: lightblue;
+      }
+
+      #targetCart {
+        position: fixed;
+        top: 20px;
+        right: 0;
+
+        height: 100%;
+        background-color: #f9f9f9;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+        transform: translateX(100%);
+      }
+
+      #targetCart.visible {
+        transform: translateX(0);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* For API Shop */
+      #cardData {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+      .innerCard {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        /* width: 100%; */
+      }
+      .innerCard img {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+      }
+
+      #football,
+      #cycling,
+      #golf {
+        background-color: lightskyblue;
+      }
+
+      #basketball,
+      #swimming {
+        background-color: lightblue;
+      }
+
+      #contactBody {
+        border-radius: 10px;
+        font-family: "Nunito Sans", serif;
+      }
+
+      .cartButton button {
+        border-radius: 10px;
+        padding: 7px;
+        color: green;
+      }
+
+      .cartItem button {
+        border-radius: 10px;
+        padding: 7px;
+        color: red;
+      }
+
+      #aboutUs {
+        background-color: lightblue;
+        font-family: "Eczar", serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+
+      .footerDiv {
+        border: 5px double white;
+        border-radius: 7px;
+        color: lightcoral;
+        padding: 7px;
+      }
+
+      .footerDiv a {
+        color: lightcoral;
+      }
+
+      .footerP {
+        text-align: justify;
+        /* letter-spacing: 1px; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="row" id="mainBody">
+      <div class="col-12">
+        <!-- nav bar section -->
+        <nav class="navbar navbar-expand-lg fixed-top">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+              <img src="images/logo.png" alt="" width="60" />
+              <span class="d-none d-md-inline">
+                <span class="logoSports">Sports</span
+                ><span class="logoX">X</span><span class="logoTra">tra</span>
+              </span></a
+            >
+
+            <!-- For Date -->
+            <h3 id="clock" class="my-auto">
+              <span id="clockDate">00:00:00</span><br /><span id="clockTime"
+                >00:00:00</span
+              >
+            </h3>
+
+            <!-- For Toggle Btn -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="navItem">
+                  <a class="navLink ms-2 btn" aria-current="page" href="#"
+                    >Home</a
+                  >
+                </li>
+                <li class="navItem">
+                  <a class="navLink ms-2 btn" href="#apiShop">API Shop</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <section id="home">
+          <div class="row mt-5">
+            <div class="col-12 col-md-6 mt-3">
+              <h1 class="mt-5 ms-5">Sports</h1>
+              <h1 class="mt-2 ms-5">Equipment</h1>
+              <h1 class="mt-2 ms-5">Homepage</h1>
+
+              <a class="btn btn-outline-primary mt-3 ms-5 mb-3" href="#aboutUs"
+                >About Us</a
+              >
+
+              <a
+                class="btn btn-outline-primary mt-3 ms-2 mb-3"
+                href="#contactUs"
+                >Contact Us</a
+              >
+
+              <button
+                id=""
+                onclick="updateCart()"
+                class="btn btn-outline-primary ms-5 mb-3"
+                style="
+                  --bs-btn-padding-y: 0.25rem;
+                  --bs-btn-padding-x: 0.5rem;
+                  --bs-btn-font-size: 0.9rem;
+                "
+              >
+                Order Now
+              </button>
+            </div>
+
+            <div class="col-12 col-md-6 my-auto">
+              <div
+                id="carouselExampleInterval"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <img
+                      src="images/home_1.jpeg"
+                      class="d-block w-100"
+                      alt="..."
+                    />
+                  </div>
+
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <img
+                      src="images/home_2.jpg"
+                      class="d-block w-100"
+                      alt="..."
+                    />
+                  </div>
+
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <img
+                      src="images/home_3.jpg"
+                      class="d-block w-100"
+                      alt="..."
+                    />
+                  </div>
+                </div>
+
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleInterval"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleInterval"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="apiShop" class="p-1">
+          <div class="sectionHeader">
+            <h3 class="mt-3 ms-3">API Shop Collection</h3>
+          </div>
+          <div id="cardData" class="mt-2"></div>
+        </section>
+
+        <section id="contactUs" class="p-3">
+          <div class="container w-100 mt-3" id="contactBody">
+            <div
+              id="errorBox"
+              class="alert alert-danger alert-dismissible fade show text-start"
+            >
+              Error
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <h2 class="mt-2 mb-5 text-center">Contact Form</h2>
+                <form action="" id="contactForm">
+                  <div class="mb-3 row text-center">
+                    <label for="name" class="col-sm-3">Name :</label>
+                    <div class="col-sm-9">
+                      <input type="text" id="contactName" />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row text-center">
+                    <label for="" class="col-sm-3">Email:</label>
+                    <div class="col-sm-9">
+                      <input type="email" id="contactMail" />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 row text-center">
+                    <label for="" class="col-sm-3">Message:</label>
+                    <div class="col-sm-9">
+                      <textarea
+                        value="hello"
+                        name=""
+                        id="contactText"
+                        placeholder="Write Your feedback..."
+                        rows="3"
+                        cols="21"
+                        oninput="checkCount()"
+                      ></textarea>
+                      <p><span id="charCount">0</span> / 100 characters</p>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-50 mb-2">
+                    Send
+                  </button>
+                </form>
+              </div>
+
+              <div class="col-6 d-none d-sm-inline my-auto">
+                <img
+                  src="images/contact.jpg"
+                  class="w-100 text-center"
+                  style="border-radius: 10px"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="aboutUs" class="">
+          <div class="row justify-content-around">
+            <div class="footerDiv col-12 col-lg-3 text-center mt-3">
+              <h5 class="mb-3">Contact Us</h5>
+              <a href="tel:+0660550444" class="btn"
+                ><i class="fa-solid fa-tty"></i> : 066 055 0444</a
+              >
+              <br />
+              <a
+                href="https://maps.apple.com/?address=999/9%20Ratchadamri%20Rd.,%20Pathum%20Wan,%20Pathum%20Wan,%20Bangkok%2010330,%20Thailand&auid=4669815287718588610&ll=13.746558,100.539148&lsp=9902&q=centralwOrld&t=m"
+                class="btn"
+                ><i class="fa-solid fa-location-dot"></i> : 999/9 Rama I Rd,
+                Pathum Wan, Bangkok 10330</a
+              >
+              <br />
+              <a href="mailto:www.sportxtra.bkk@gmail.com" class="btn">
+                <i class="fa-solid fa-envelope-open"></i> :
+                www.sportxtra.bkk@gmail.com</a
+              >
+              <br />
+              <a href="https://www.google.com" class="btn" target="_blank">
+                <i class="fa-brands fa-facebook"></i> :
+                https://facebook.com/sportxtra@bkk</a
+              >
+              <br />
+            </div>
+
+            <div class="footerDiv col-12 col-lg-3 mt-3 p-4">
+              <h5 class="text-center">About Us</h5>
+              <p class="footerP">
+                At
+                <a class="navbar-brand" href="#">
+                  <span class="d-none d-md-inline">
+                    <span class="logoSports">Sports</span
+                    ><span class="logoX">X</span
+                    ><span class="logoTra">tra</span>
+                  </span></a
+                ><span class="d-sm-none text-white">SportsXtra</span> , we are
+                dedicated to empowering athletes and sports enthusiasts of all
+                levels to achieve their personal best. Founded in 2021, our
+                mission is to provide top-quality sporting goods and exceptional
+                customer service, fostering a community where passion for sports
+                thrives.
+              </p>
+            </div>
+
+            <div class="footerDiv col-12 col-lg-3 mt-3 p-2">
+              <h6 class="mt-5 ms-3">Elevate Your Performance</h6>
+              <h6 class="ms-3">Unleash Your Potential</h6>
+              <h6 class="ms-3">Fuel Your Passion, Equip Your Game</h6>
+              <h6 class="ms-3">Where Athletes Find Their Edge</h6>
+              <h6 class="ms-3">Play with Passion, Shop with Confidence</h6>
+              <h6 class="ms-3">Equip Excellence, Achieve Greatness</h6>
+            </div>
+          </div>
+
+          <div class="row mt-2" style="background-color: aliceblue">
+            <div class="col-12 col-md-6 text-center mt-3">
+              <i class="fa-brands fa-facebook mx-3"></i>
+              <i class="fa-brands fa-instagram mx-3"></i>
+              <i class="fa-brands fa-x-twitter mx-3"></i>
+              <i class="fa-brands fa-youtube mx-3"></i>
+              <i class="fa-brands fa-linkedin mx-3"></i>
+            </div>
+
+            <div class="col-12 col-md-6 text-center mt-3">
+              <p>
+                copyright <i class="fa-regular fa-copyright"></i> 2025. All
+                Rights Reserve.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="targetCart" class="hidden col-3 mt-5">
+        <h2 class="text-center mt-5 mb-2">Your Cart</h2>
+        <div class="cart mt-3" id="cart"></div>
+        <h3>Total: $<span id="total">0</span></h3>
+        <div class="cartButton mt-5 text-center">
+          <button onclick="backToShopping()">Back To Shopping</button>
+          <button onclick="backToShopping()">Comfirm</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let cart = [];
+
+      function addToCart(name, price) {
+        let item = cart.find((i) => i.name === name);
+        if (item) {
+          item.quantity++;
+        } else {
+          cart.push({ name, price, quantity: 1 });
+        }
+        updateCart();
+      }
+
+      function removeFromCart(name) {
+        cart = cart.filter((i) => i.name !== name);
+        updateCart();
+
+        if (cart.length < 0) {
+          targetCart.classList.add("hidden");
+          targetCart.classList.remove("visible");
+        }
+      }
+
+      function updateQuantity(name, quantity) {
+        let item = cart.find((i) => i.name === name);
+        if (item) {
+          item.quantity = quantity;
+          if (item.quantity <= 0) removeFromCart(name);
+        }
+        updateCart();
+      }
+
+      function backToShopping() {
+        const targetCart = document.getElementById("targetCart");
+        const mainBody = document.getElementById("mainBody");
+
+        targetCart.classList.add("hidden");
+        targetCart.classList.remove("visible");
+        mainBody.classList.add("col-12");
+        mainBody.classList.remove("col-9");
+      }
+
+      function updateCart() {
+        const cartDiv = document.getElementById("cart");
+        const totalSpan = document.getElementById("total");
+        cartDiv.innerHTML = "";
+        let total = 0;
+        cart.forEach((item) => {
+          total += item.price * item.quantity;
+          cartDiv.innerHTML += `
+                          <div class="cartItem">
+                              <span>${item.name} - $${item.price} x </span>
+                              <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.name}', this.value)">
+                              <button onclick="removeFromCart('${item.name}')">Remove</button>
+                              
+                          </div>
+                      `;
+        });
+        totalSpan.textContent = total.toFixed(2);
+
+        const targetCart = document.getElementById("targetCart");
+        const mainBody = document.getElementById("mainBody");
+        if (targetCart) {
+          // targetCart.scrollIntoView({ behavior: "smooth" });
+          targetCart.classList.remove("hidden");
+          targetCart.classList.add("visible");
+          mainBody.classList.remove("col-12");
+          mainBody.classList.add("col-9");
+        }
+      }
+
+      // for char count
+      function checkCount() {
+        let textInput = document.getElementById("contactText");
+        let charCount = document.getElementById("charCount");
+
+        const currentLength = textInput.value.length;
+        charCount.textContent = currentLength;
+
+        // change the text color if the limit is exceeded
+        if (currentLength > 100) {
+          charCount.style.color = "red";
+        } else {
+          charCount.style.color = "#61dafb";
+        }
+        return charCount.textContent;
+      }
+
+      // For API Shop
+      fetch("https://fakestoreapi.com/products")
+        .then((res) => res.json())
+        .then((json) => {
+          renderData(json);
+        });
+
+      function renderData(d) {
+        const cardContainer = document.getElementById("cardData");
+        cardContainer.innerHTML = ""; // Clear previous content
+        d.forEach((u) => {
+          const div = document.createElement("div");
+          div.classList.add("innerCard");
+          div.innerHTML = `
+                    <img src="${u.image}" alt="Product Image"/>
+                    <h3>${u.id}</h3>
+                    <p>${u.title}</p>
+                    <h5>$${u.price}</h5>
+                    <input type="button" class="btn btn-primary"
+                  style="
+                    --bs-btn-padding-y: 0.25rem;
+                    --bs-btn-padding-x: 0.5rem;
+                    --bs-btn-font-size: 0.9rem;
+                  " value="Add to Cart" onclick="addToCart('${u.title}',${u.price})">
+                `;
+          cardContainer.appendChild(div);
+        });
+      }
+    </script>
+
+    <!-- // valid -->
+    <script src="script.js"></script>
+
+    <!-- for boostrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- for font awesome -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>

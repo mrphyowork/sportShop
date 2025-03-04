@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="image/logo.png" type="image/x-icon" />
+
+    <!-- bootstrap 5 cdn css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <!-- google font cdn  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- fontawesome cdn css  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script> -->
+    <title>Admin</title>
+
+    <style>
+      .hidden {
+        display: none;
+      }
+
+      #formBody {
+        border: 5px double black;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        font-family: "Eczar", serif;
+      }
+
+      .firstRow {
+        background-color: #87cefa;
+        /* border-radius: 15px; */
+      }
+
+      #clock {
+        border: 2px dashed black;
+        border-radius: 10px;
+        padding: 8px;
+        font-size: small;
+      }
+
+      #mainBody {
+        font-family: "Ubuntu", sans-serif;
+      }
+
+      #cardData,
+      #bestProducts,
+      #viewCU,
+      #invoiceAccount,
+      #saleDiscount {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .innerCard {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="formBody" class="w-50 mx-auto mt-3">
+      <h2 class="mb-3">Welcome!</h2>
+      <div id="error" class="text-danger mt-3 mb-3"></div>
+      <div class="row mt-3">
+        <label for="userName" class="col-12 col-sm-3">Username :</label>
+        <input
+          type="text"
+          id="userName"
+          placeholder="admin"
+          class="col-12 col-sm-9"
+          style="width: fit-content"
+        />
+      </div>
+      <div class="row mt-3">
+        <label for="password" class="col-12 col-sm-3">Password :</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="admin"
+          class="col-12 col-sm-9"
+          style="width: fit-content"
+        />
+      </div>
+
+      <div class="row justify-content-evenly mt-3">
+        <button
+          type="button"
+          id="loginBtn"
+          style="width: fit-content"
+          class="btn btn-outline-primary mt-3"
+        >
+          Login
+        </button>
+        <button
+          type="reset"
+          style="width: fit-content"
+          class="btn btn-outline-primary mt-3"
+        >
+          Clear
+        </button>
+      </div>
+    </form>
+
+    <div
+      class="hidden container-fluid"
+      style="background-color: #ffffe0"
+      id="mainBody"
+    >
+      <div class="firstRow row">
+        <nav class="navbar navbar-expand-lg">
+          <div class="container-fluid">
+            <!-- For title -->
+            <a class="navbar-brand" href="#">
+              <img
+                src="image/logo.png"
+                alt=""
+                width="60"
+                style="border-radius: 50%"
+              />
+              <span class="d-none d-md-inline text-light">
+                A<span class="text-dark">D</span>MIN
+              </span></a
+            >
+
+            <!-- For Date -->
+            <h6 id="clock" class="my-auto">
+              <span id="clockDate">00:00:00</span><br /><span id="clockTime"
+                >00:00:00</span
+              >
+            </h6>
+
+            <!-- For navbar -->
+            <div class="navbar nav h4">
+              <li class="nav-item dropdown">
+                <a
+                  href="#"
+                  class="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="fas fa-user-circle"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#" class="dropdown-item">User Profile</a>
+                  </li>
+                  <li>
+                    <a href="#" class="dropdown-item" id="logout">Logout</a>
+                  </li>
+                </ul>
+              </li>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="row g-0 mt-3">
+        <nav class="col-3">
+          <!-- nav sidebar  -->
+          <div class="list-group text-center text-lg-start">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >Dashborad</span
+            >
+
+            <a
+              href="#saleAndOrder"
+              class="list-group-item list-group-item-action active"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-bag-shopping me-2"></i>
+              <span class="d-none d-lg-inline">Sales and Order</span>
+            </a>
+            <a
+              href="#bestSellingProducts"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <!-- <i class="fa-solid fa-fire"></i> -->
+              <i class="fa-brands fa-product-hunt me-2"></i>
+              <span class="d-none d-lg-inline">Best-selling Products</span>
+            </a>
+            <a
+              href="#stockAlerts"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-triangle-exclamation me-2"></i>
+              <span class="d-none d-lg-inline">Low Stock Alerts</span>
+            </a>
+          </div>
+
+          <div class="list-group text-center text-lg-start mt-2">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >Products & Order</span
+            >
+
+            <a
+              href="#invoiceAndSlip"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-file-pen me-2"></i>
+              <span class="d-none d-lg-inline"
+                >Add,Edit and Delete Products</span
+              >
+            </a>
+            <a
+              href="#invoiceAndSlip"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-cart-plus me-2"></i>
+              <span class="d-none d-lg-inline">New Orders</span>
+              <span class="badge rounded-pill text-bg-danger float-end"
+                >13</span
+              >
+            </a>
+            <a
+              href="#invoiceAndSlip"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-file-invoice-dollar me-2"></i>
+              <span class="d-none d-lg-inline">Invoices & Slips</span>
+            </a>
+          </div>
+
+          <div class="list-group text-center text-lg-start mt-2">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >Customer Management</span
+            >
+
+            <a
+              href="#viewCustomers"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-id-card me-2"></i>
+              <span class="d-none d-lg-inline">View CU Profiles</span>
+            </a>
+            <a
+              href="#viewCustomers"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <!-- <i class="fa-solid fa-fire"></i> -->
+              <i class="fa-regular fa-id-badge me-2"></i>
+              <span class="d-none d-lg-inline">Manage CU Accounts</span>
+            </a>
+          </div>
+
+          <div class="list-group text-center text-lg-start mt-2">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >Sale & Discounts</span
+            >
+
+            <a
+              href="#saleAndDiscount"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-percent me-2"></i>
+              <span class="d-none d-lg-inline">Create Discount</span>
+            </a>
+            <a
+              href="#saleAndDiscount"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-percent me-2"></i>
+              <span class="d-none d-lg-inline">Manage Discount</span>
+            </a>
+            <a
+              href="#saleAndDiscount"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <!-- <i class="fa-solid fa-fire"></i> -->
+              <i class="fa-solid fa-cloud-rain me-2"></i>
+              <span class="d-none d-lg-inline">Seasonal Deals</span>
+            </a>
+          </div>
+
+          <div class="list-group text-center text-lg-start mt-2">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >Payment & Transactions</span
+            >
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-money-bill me-2"></i>
+              <span class="d-none d-lg-inline">View Payment history</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-rotate-left me-2"></i>
+              <span class="d-none d-lg-inline">Manage Refunds</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-gears me-2"></i>
+              <span class="d-none d-lg-inline">Gatway Setting</span>
+            </a>
+          </div>
+
+          <div class="list-group text-center text-lg-start mt-2">
+            <span
+              class="list-group-item d-block text-center text-secondary"
+              style="background-color: #87cefa"
+              >User Management</span
+            >
+
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-genderless me-2"></i>
+              <span class="d-none d-lg-inline">Admin permission</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-person me-2"></i>
+              <span class="d-none d-lg-inline">Staff Account</span>
+              <span class="badge rounded-pill text-bg-danger float-end">7</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-solid fa-fingerprint me-2"></i>
+              <span class="d-none d-lg-inline">Access Control</span>
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action"
+              style="background-color: #add8e6"
+            >
+              <i class="fa-brands fa-creative-commons-sampling me-2"></i>
+              <span class="d-none d-lg-inline">Activity Logs</span>
+            </a>
+          </div>
+        </nav>
+
+        <div class="col-9">
+          <section id="saleAndOrder" class="">
+            <h5 class="ms-4">Sales and Orders</h5>
+            <div id="cardData" class=""></div>
+          </section>
+
+          <section id="bestSellingProducts" class="mt-4">
+            <h5 class="ms-3 mt-3">Best-selling Products</h5>
+            <div class="row" id="bestProducts">
+              <div class="innerCard">
+                <h6 class="text-center">ID : 20</h6>
+                <p class="text-center">
+                  DANVOUY Womens T Shirt Casual Cotton Short
+                </p>
+                <h6 class="text-center">$ 12.99</h6>
+              </div>
+
+              <div class="innerCard">
+                <h6 class="text-center">ID : 16</h6>
+                <p class="text-center">
+                  Lock and Love Women's Removable Hooded Faux Leather Moto Biker
+                  Jacket
+                </p>
+                <h6 class="text-center">$ 29.95</h6>
+              </div>
+
+              <div class="innerCard">
+                <h6 class="text-center">ID : 8</h6>
+                <p class="text-center">
+                  Pierced Owl Rose Gold Plated Stainless Steel Double
+                </p>
+                <h6 class="text-center">$ 10.99</h6>
+              </div>
+            </div>
+          </section>
+
+          <section id="stockAlerts" class="mt-4">
+            <h5 class="ms-3 mt-3">Low Stock Alerts</h5>
+            <div
+              class="alert alert-danger w-75 ms-3"
+              role="alert"
+              style="font-size: small"
+            >
+              <i class="fa-solid fa-triangle-exclamation me-2"></i>
+              The quantity of Product-ID : 3 is low level. So please
+              <a href="#" class="alert-link"> Refill </a>.
+            </div>
+
+            <div
+              class="alert alert-danger w-75 ms-3"
+              role="alert"
+              style="font-size: small"
+            >
+              <i class="fa-solid fa-triangle-exclamation me-2"></i>
+              The quantity of Product-ID : 23 is Empty. So please
+              <a href="#" class="alert-link"> Refill </a>.
+            </div>
+          </section>
+
+          <section id="invoiceAndSlip" class="mt-4">
+            <h5 class="ms-3 mt-3">Invoices and Slips</h5>
+            <div class="row" id="invoiceAccount">
+              <div class="innerCard" style="text-align: start; padding: 5px">
+                <h5 class="ms-2">Monthly Income</h5>
+                <p class="ms-2">$53296</p>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Info striped example"
+                  aria-valuenow="75"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div
+                    class="progress-bar progress-bar-striped bg-info"
+                    style="width: 75%"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="innerCard" style="text-align: start; padding: 5px">
+                <h5 class="ms-2">Monthly Expensive</h5>
+                <p class="ms-2">$14454</p>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Info striped example"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div
+                    class="progress-bar progress-bar-striped bg-danger"
+                    style="width: 25%"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="innerCard" style="text-align: start; padding: 5px">
+                <h5 class="ms-2">Net Profit</h5>
+                <p class="ms-2">$38842</p>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Info striped example"
+                  aria-valuenow="50"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  <div
+                    class="progress-bar progress-bar-striped bg-success"
+                    style="width: 50%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="viewCustomers" class="mt-4">
+            <h5 class="ms-3 mt-3">View Customers Profiles</h5>
+            <div class="row text-light" id="viewCU">
+              <div class="innerCard bg-warning">
+                <h2><i class="fa-solid fa-user-secret"></i></h2>
+                <h5 class="text-center">Customer ID : 1</h5>
+                <p class="text-center">Name : Johnd</p>
+                <p class="text-center">
+                  <a href="mailto:www.google.com" class="btn text-light">
+                    Email : john@gmail.com
+                  </a>
+                </p>
+                <p class="text-center">
+                  <a href="tel:+1-570-236-7033" class="btn text-light">
+                    Ph : 1-570-236-7033</a
+                  >
+                </p>
+              </div>
+
+              <div class="innerCard bg-success">
+                <h2><i class="fa-solid fa-user-nurse"></i></h2>
+                <h5 class="text-center">Customer ID : 2</h5>
+                <p class="text-center">Name : Kevinryan</p>
+                <p class="text-center">
+                  <a href="mailto:www.google.com" class="btn text-light">
+                    Email : kevinryan@gmail.com
+                  </a>
+                </p>
+                <p class="text-center">
+                  <a href="tel:+1-570-236-7033" class="btn text-light">
+                    Ph : 1-567-094-1345</a
+                  >
+                </p>
+              </div>
+
+              <div class="innerCard bg-info">
+                <h2><i class="fa-solid fa-user-tie"></i></h2>
+                <h5 class="text-center">Customer ID : 3</h5>
+                <p class="text-center">Name : Donero</p>
+                <p class="text-center">
+                  <a href="mailto:www.google.com" class="btn text-light">
+                    Email : donero@gmail.com
+                  </a>
+                </p>
+                <p class="text-center">
+                  <a href="tel:+1-570-236-7033" class="btn text-light">
+                    Ph : 1-765-789-6745</a
+                  >
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="saleAndDiscount" class="mt-4">
+            <h5 class="ms-3 mt-3">Sale & Discounts</h5>
+            <div class="row" id="saleDiscount">
+              <div class="innerCard" style="background-color: #87cefa">
+                <h6>Create Discounts</h6>
+                <table class="table">
+                  <tr>
+                    <th>Product ID</th>
+                    <th>Procunt Name</th>
+                    <th>Discount Rate</th>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>Gold Petite</td>
+                    <td>18%</td>
+                  </tr>
+                  <tr>
+                    <td>15</td>
+                    <td>Jacket Coats</td>
+                    <td>22%</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>WD 2TB HHD</td>
+                    <td>30%</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="innerCard" style="background-color: #add8e6">
+                <h6>Seasonal Deals</h6>
+                <table class="table">
+                  <tr>
+                    <th>Season Tpye</th>
+                    <th>Category Devices</th>
+                    <th>UpTo Discount</th>
+                  </tr>
+                  <tr>
+                    <td>Summer</td>
+                    <td>E Devices</td>
+                    <td>10%</td>
+                  </tr>
+                  <tr>
+                    <td>Rainy</td>
+                    <td>Medication</td>
+                    <td>12%</td>
+                  </tr>
+                  <tr>
+                    <td>Winter</td>
+                    <td>Clothings</td>
+                    <td>40%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- For API Shop -->
+    <script>
+      fetch("https://fakestoreapi.com/products")
+        .then((res) => res.json())
+        .then((json) => {
+          renderData(json);
+        });
+
+      function renderData(d) {
+        const cardContainer = document.getElementById("cardData");
+        cardContainer.innerHTML = ""; // Clear previous content
+        let count = 0;
+
+        d.forEach((u) => {
+          if (count < 4) {
+            const div = document.createElement("div");
+            div.classList.add("innerCard");
+            div.innerHTML = `
+                      <h6>ID : ${u.id}</h6>
+                      <p>${u.title}</p>
+                      <h6>$${u.price}</h6>
+                  `;
+            cardContainer.appendChild(div);
+            count++;
+          }
+        });
+      }
+    </script>
+
+    <!-- For date -->
+    <script src="script.js"></script>
+
+    <!-- bootstrap 5 cdn js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- fontawesome cdn js  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
+      integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>
