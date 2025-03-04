@@ -42,7 +42,7 @@ const userName = document.getElementById("userName");
 const password = document.getElementById("password");
 const errorBox = document.getElementById("error");
 
-loginBtn.addEventListener("click", (e) => {
+formBody.addEventListener("submit", (e) => {
   let messageBox = [];
 
   if (userName.value === "" || userName.value === null) {
